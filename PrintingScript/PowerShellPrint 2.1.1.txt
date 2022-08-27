@@ -1,0 +1,17 @@
+    $printers = Get-Printer 
+    if ($printers.count -gt 1){
+        Write-Host "Multiple printers were found" -ForegroundColor Green
+        Write-Host "Please select a printer" -ForegroundColor Green
+        for($i = 0; $i -lt $printers.count; $i++){
+            Write-Host "$($i): $($printers[$i].SamAccountName) | $($printers[$i].Name)"
+        }
+        $selection = Read-Host -Prompt "Enter the number of the printer"
+        $selected_printer = $printers[$selection]
+       Write-Host "You will print out to:" -ForegroundColor Green;
+       $printername = $selected_printer.Name
+       Write-Host "$printername" -ForegroundColor Red;
+    }
+
+$FileName = read-host -prompt "Input File Path"
+
+$FileName | Out-Printer -Name $selected_printer.Name
